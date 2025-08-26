@@ -4,7 +4,7 @@ import 'package:expense_tracker/auth/auth_page.dart';
 import 'package:expense_tracker/cubits/signup_cubit/signup_states.dart';
 import 'package:expense_tracker/cubits/signup_cubit/signup_user_cubit.dart';
 import 'package:expense_tracker/services/open_user_box.dart';
-import 'package:expense_tracker/widgets/auth_snackbar.dart';
+import 'package:expense_tracker/helper/auth_snackbar.dart';
 import 'package:expense_tracker/widgets/my_elevated_buttom.dart';
 import 'package:expense_tracker/widgets/my_text_form_field.dart';
 import 'package:flutter/material.dart';

@@ -4,12 +4,14 @@ import 'package:expense_tracker/auth/auth_page.dart';
 import 'package:expense_tracker/auth/login_page.dart';
 import 'package:expense_tracker/auth/signup_page.dart';
 import 'package:expense_tracker/firebase_options.dart';
+import 'package:expense_tracker/helper/simple_observer.dart';
 import 'package:expense_tracker/models/expense_model.dart';
 import 'package:expense_tracker/views/home_view.dart';
 import 'package:expense_tracker/views/on_boarding_view.dart';
 import 'package:expense_tracker/views/profile_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -25,6 +27,8 @@ void main() async {
   log('Initialized Hive');
   Hive.registerAdapter(ExpenseAdapter());
   log('Registered ExpenseAdapter');
+  // Observer for all cubits
+  Bloc.observer = SimpleBlocObserver();
   runApp(const MyApp());
 }
 
@@ -43,14 +47,6 @@ class _MyAppState extends State<MyApp> {
     FlutterNativeSplash.remove();
   }
 
-  /*
-  void initInitialization() async {
-    log('Start initInitialization...');
-    await Future.delayed(const Duration(seconds: 2));
-    log('Initialization done...');
-    FlutterNativeSplash.remove();
-  }
-  */
 
   // This widget is the root of your application.
   @override

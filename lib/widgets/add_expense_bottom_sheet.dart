@@ -4,6 +4,7 @@ import 'package:expense_tracker/cubits/add_expense_cubit/add_expense_cubit.dart'
 import 'package:expense_tracker/cubits/add_expense_cubit/add_expense_states.dart';
 import 'package:expense_tracker/helper/helper_dialog.dart';
 import 'package:expense_tracker/widgets/add_expense_form.dart';
+import 'package:expense_tracker/helper/auth_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,6 +23,8 @@ class AddExpenseBottomSheet extends StatelessWidget {
           else if(state is AddExpenseSuccess){
             Navigator.of(context).pop(); // Close the loading indicator
             Navigator.of(context).pop(); // Close the bottom sheet
+            showSnackBar(context, 'Expense added successfully');
+            // To know from the logs in the debug console (temporary)
             log('Expense added successfully');
           }
           else if(state is AddExpenseError){
