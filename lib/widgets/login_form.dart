@@ -156,8 +156,4 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Future<void> openBox(LoginSuccess state) async {
-    final String userId = state.user.uid;
-    await openUserBox(userId: userId);
-  }
 }
