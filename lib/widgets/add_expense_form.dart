@@ -1,6 +1,10 @@
+import 'package:expense_tracker/cubits/add_expense_cubit/add_expense_cubit.dart';
+import 'package:expense_tracker/models/expense_model.dart';
 import 'package:expense_tracker/widgets/my_elevated_buttom.dart';
 import 'package:expense_tracker/widgets/my_text_form_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddExpenseForm extends StatefulWidget {
   const AddExpenseForm({super.key});
@@ -21,6 +25,8 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
   final TextEditingController _categoryController = TextEditingController();
 
   final TextEditingController _dateController = TextEditingController();
+  // To show an error in case of a wrong input
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   @override
   Widget build(BuildContext context) {
@@ -86,8 +92,23 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   // Add logic here
+                  // Here we will trigger the cubit
+                  context.read<AddExpenseCubit>().addExpense(
+                    expense: Expense(
+                      userId: FirebaseAuth.instance.currentUser!.uid,
+                      title: _titleController.text,
+                      amount: double.tryParse(_amountController.text) ?? 0.0,
+                      date: DateTime.now().toString(),
+                      category: _categoryController.text,
+                      description: _descriptionController.text,
+                      // expenseID is generated in the cubit
+                    ),
+                  );
                 } else {
-                  // Show error message
+                  autovalidateMode = AutovalidateMode.always;
+                  setState(() {
+                    
+                  });
                 }
               },
             ),

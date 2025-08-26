@@ -4,6 +4,7 @@ import 'package:expense_tracker/auth/auth_page.dart';
 import 'package:expense_tracker/auth/signup_page.dart';
 import 'package:expense_tracker/cubits/login_cubit/login_states.dart';
 import 'package:expense_tracker/cubits/login_cubit/login_user_cubit.dart';
+import 'package:expense_tracker/helper/helper_dialog.dart';
 import 'package:expense_tracker/services/open_user_box.dart';
 import 'package:expense_tracker/widgets/auth_snackbar.dart';
 import 'package:expense_tracker/widgets/login_or_signup_hint.dart';
@@ -33,23 +34,7 @@ class _LoginFormState extends State<LoginForm> {
     return BlocConsumer<LoginUserCubit, LoginState>(
       listener: (context, state) async{
         if (state is LoginLoading) {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => AlertDialog(
-              content: SizedBox(
-                height: 100,
-                width: 200,
-                child: Row(
-                  children: const [
-                    CircularProgressIndicator(),
-                    SizedBox(width: 16),
-                    Text('Logging in...'),
-                  ],
-                ),
-              ),
-            ),
-          );
+          loadingIndicator(context, message: 'Logging in...');
         }
         if (state is LoginSuccess)  {
           Navigator.pop(context); // Close the loading dialog
@@ -155,5 +140,7 @@ class _LoginFormState extends State<LoginForm> {
       },
     );
   }
+
+  
 
 }

@@ -4,7 +4,7 @@ class AddExpenseState {
   final String userId;
   final Expense expense;
 
-  AddExpenseState({required this.userId, required this.expense});
+  AddExpenseState({required this.userId,required this.expense});
 }
 
 class AddExpenseInitial extends AddExpenseState {
@@ -18,7 +18,9 @@ class AddExpenseInitial extends AddExpenseState {
           date: '',
           category: '',
           description: '',
+          expenseID: '',
         ),
+       
       );
 }
 

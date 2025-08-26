@@ -23,6 +23,7 @@ class ExpenseAdapter extends TypeAdapter<Expense> {
       date: fields[3] as String,
       category: fields[4] as String,
       description: fields[5] as String,
+      expenseID: fields[6] as String,
     );
   }
 

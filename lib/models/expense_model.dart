@@ -22,6 +22,9 @@ class Expense {
   @HiveField(5)
   final String description;
 
+  @HiveField(6)
+  final String? expenseID;
+
   Expense({
     required this.userId,
     required this.title,
@@ -29,5 +32,6 @@ class Expense {
     required this.date,
     required this.category,
     required this.description,
+    this.expenseID,
   });
 }
