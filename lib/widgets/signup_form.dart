@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:expense_tracker/auth/auth_page.dart';
 import 'package:expense_tracker/cubits/signup_cubit/signup_states.dart';
 import 'package:expense_tracker/cubits/signup_cubit/signup_user_cubit.dart';
+import 'package:expense_tracker/services/open_user_box.dart';
 import 'package:expense_tracker/widgets/auth_snackbar.dart';
 import 'package:expense_tracker/widgets/my_elevated_buttom.dart';
 import 'package:expense_tracker/widgets/my_text_form_field.dart';
@@ -29,7 +32,7 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignupUserCubit, SignupState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if(state is SignupLoading) {
           showDialog(
             context: context,
@@ -50,9 +53,11 @@ class _SignUpFormState extends State<SignUpForm> {
           );
         } else if(state is SignupSuccess) {
           Navigator.of(context).pop(); // Close the loading dialog
-          // Navigate to the home page or show a success message
-          showSnackBar(context, 'Sign up successful!');
+          // Open user box first
+          await openUserBox(userId:state.user.uid);
+          // Then navigate to AuthPage
           Navigator.pushNamed(context, AuthPage.authRoute);
+          log('Box opened successfully for user: ${state.user.uid}');
         } else if(state is SignupError) {
           Navigator.of(context).pop(); // Close the loading dialog
           showSnackBar(context, state.errorMessage );

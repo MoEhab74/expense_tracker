@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:expense_tracker/auth/auth_page.dart';
 import 'package:expense_tracker/auth/signup_page.dart';
 import 'package:expense_tracker/cubits/login_cubit/login_states.dart';
 import 'package:expense_tracker/cubits/login_cubit/login_user_cubit.dart';
+import 'package:expense_tracker/services/open_user_box.dart';
 import 'package:expense_tracker/widgets/auth_snackbar.dart';
 import 'package:expense_tracker/widgets/login_or_signup_hint.dart';
 import 'package:expense_tracker/widgets/my_elevated_buttom.dart';
@@ -28,7 +31,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginUserCubit, LoginState>(
-      listener: (context, state) {
+      listener: (context, state) async{
         if (state is LoginLoading) {
           showDialog(
             context: context,
@@ -48,9 +51,14 @@ class _LoginFormState extends State<LoginForm> {
             ),
           );
         }
-        if (state is LoginSuccess) {
+        if (state is LoginSuccess)  {
           Navigator.pop(context); // Close the loading dialog
+          // Open user box first
+          // await openBox(state)
+          await openUserBox(userId:state.user.uid);
+          // Then navigate to AuthPage
           Navigator.pushNamed(context, AuthPage.authRoute);
+          log('Box opened successfully for user: ${state.user.uid}');
         }
         if (state is LoginError) {
           Navigator.pop(context); // Close the loading dialog
@@ -147,17 +155,9 @@ class _LoginFormState extends State<LoginForm> {
       },
     );
   }
-}
 
-
-/*
-void validateUserInput(BuildContext context) {
-    if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
-      // Add logic here
-      
-    } else {
-      
-    }
+  Future<void> openBox(LoginSuccess state) async {
+    final String userId = state.user.uid;
+    await openUserBox(userId: userId);
   }
-*/
+}
