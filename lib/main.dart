@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:expense_tracker/auth/auth_page.dart';
 import 'package:expense_tracker/auth/login_page.dart';
 import 'package:expense_tracker/auth/signup_page.dart';
+import 'package:expense_tracker/cubits/expenses_cubit/expenses_cubit.dart';
 import 'package:expense_tracker/firebase_options.dart';
 import 'package:expense_tracker/helper/simple_observer.dart';
 import 'package:expense_tracker/models/expense_model.dart';
@@ -29,8 +30,8 @@ void main(dynamic context) async {
   log('Registered ExpenseAdapter');
   // Observer for all cubits
   Bloc.observer = SimpleBlocObserver();
-    runApp(const MyApp());
-  }
+  runApp(const MyApp());
+}
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -47,28 +48,30 @@ class _MyAppState extends State<MyApp> {
     FlutterNativeSplash.remove();
   }
 
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-        HomeView.homeRoute: (context) => HomeView(),
-        OnBoardingView.onBoardingRoute: (context) => OnBoardingView(),
-        LoginPage.loginRoute: (context) => LoginPage(),
-        SignUpPage.signupRoute: (context) => SignUpPage(),
-        ProfileView.profileRoute: (context) => ProfileView(),
-        AuthPage.authRoute: (context) => AuthPage(),
-      },
-      initialRoute: 'OnBoardingView',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Color(0xff3F8782),
-          brightness: Brightness.light,
+    return BlocProvider(
+      create: (context) => ExpensesCubit(),
+      child: MaterialApp(
+        routes: {
+          HomeView.homeRoute: (context) => HomeView(),
+          OnBoardingView.onBoardingRoute: (context) => OnBoardingView(),
+          LoginPage.loginRoute: (context) => LoginPage(),
+          SignUpPage.signupRoute: (context) => SignUpPage(),
+          ProfileView.profileRoute: (context) => ProfileView(),
+          AuthPage.authRoute: (context) => AuthPage(),
+        },
+        initialRoute: 'OnBoardingView',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Color(0xff3F8782),
+            brightness: Brightness.light,
+          ),
         ),
+        debugShowCheckedModeBanner: false,
+        home: OnBoardingView(),
       ),
-      debugShowCheckedModeBanner: false,
-      home: OnBoardingView(),
     );
   }
 }
