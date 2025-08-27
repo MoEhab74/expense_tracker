@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:expense_tracker/auth/auth_page.dart';
 import 'package:expense_tracker/cubits/signup_cubit/signup_states.dart';
 import 'package:expense_tracker/cubits/signup_cubit/signup_user_cubit.dart';
@@ -142,16 +140,3 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 }
-
-
-/*
-void validateUserInput(BuildContext context) {
-    if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
-      // Add logic here
-      
-    } else {
-      
-    }
-  }
-*/

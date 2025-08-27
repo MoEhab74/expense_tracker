@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:expense_tracker/auth/auth_page.dart';
 import 'package:expense_tracker/auth/signup_page.dart';
 import 'package:expense_tracker/cubits/login_cubit/login_states.dart';
