@@ -10,11 +10,11 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   List<Expense>? expenses ;
   final String _userEmail = FirebaseAuth.instance.currentUser!.email!;
 
-  // Fetch all expenses method 
+  // Fetch all expenses method
 
   void fetchAllExpenses() {
     // Get the current user's expenses box
-    var userExpenses = getUserBox(email: _userEmail);
+    var userExpenses = getUserBox(userID: _userEmail);
     // Convert the Iterable<Expense> to a List<Expense>
     expenses = userExpenses.values.toList();
     // tell the ui that the expenses have been loaded

@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:expense_tracker/auth/auth_page.dart';
 import 'package:expense_tracker/auth/login_page.dart';
 import 'package:expense_tracker/auth/signup_page.dart';
-import 'package:expense_tracker/cubits/expenses_cubit/expenses_cubit.dart';
 import 'package:expense_tracker/firebase_options.dart';
 import 'package:expense_tracker/helper/simple_observer.dart';
 import 'package:expense_tracker/models/expense_model.dart';

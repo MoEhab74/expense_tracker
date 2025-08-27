@@ -5,14 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddExpenseCubit extends Cubit<AddExpenseState> {
   AddExpenseCubit() : super(AddExpenseInitial());
-
+  
   // create addExpense function
 
   void addExpense({required Expense expense}) async {
     try {
       // userId ===> email
       // Store the Expense in your local database ===> in the box that you created
-      var userExpensesBox = getUserBox(email: expense.userId);
+      var userExpensesBox = getUserBox(userID: expense.userId);
       // Create a unique ID for the new expense
       final counter = userExpensesBox.length + 1;
       final expenseId = 'EXP$counter';

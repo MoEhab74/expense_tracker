@@ -5,7 +5,6 @@ import 'package:expense_tracker/auth/signup_page.dart';
 import 'package:expense_tracker/cubits/login_cubit/login_states.dart';
 import 'package:expense_tracker/cubits/login_cubit/login_user_cubit.dart';
 import 'package:expense_tracker/helper/helper_dialog.dart';
-import 'package:expense_tracker/services/open_user_box.dart';
 import 'package:expense_tracker/helper/auth_snackbar.dart';
 import 'package:expense_tracker/widgets/login_or_signup_hint.dart';
 import 'package:expense_tracker/widgets/my_elevated_buttom.dart';
@@ -41,7 +40,7 @@ class _LoginFormState extends State<LoginForm> {
           // Open user box first
           // Then navigate to AuthPage
           Navigator.pushNamed(context, AuthPage.authRoute);
-          log('Box opened successfully for user: ${state.user.email}');
+          // log('Box opened successfully for user: ${state.user.email}');
         }
         if (state is LoginError) {
           Navigator.pop(context); // Close the loading dialog

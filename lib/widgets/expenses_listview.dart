@@ -10,6 +10,7 @@ class HomeExpensesListViewBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Where is the provider of this cubit??????!
     return BlocConsumer<ExpensesCubit, ExpensesState>(
       listener: (context, state) {
         if (state is ExpensesError) {

@@ -26,7 +26,7 @@ class LoginUserCubit extends Cubit<LoginState> {
       );
 
       // await openBox(state)
-      await openUserBox(email: credential.user!.email!);
+      // await openUserBox(userID: credential.user!.email!);
       // Navigator.pushNamed(context, HomeView.homeRoute);
       emit(LoginSuccess(user: credential.user!));
       showSnackBar(

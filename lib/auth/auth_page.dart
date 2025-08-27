@@ -12,19 +12,22 @@ class AuthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ExpensesCubit(),
-      child: Scaffold(
-        body: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return HomeView();
-            }
-            return OnBoarding2();
-          },
-        ),
+    return Scaffold(
+      body: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return BlocProvider(
+              create: (context) => ExpensesCubit(),
+              child: HomeView(),
+            );
+          }
+          return OnBoarding2();
+        },
       ),
     );
   }
 }
+
+
+

@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:expense_tracker/auth/auth_page.dart';
 import 'package:expense_tracker/cubits/signup_cubit/signup_states.dart';
 import 'package:expense_tracker/cubits/signup_cubit/signup_user_cubit.dart';
-import 'package:expense_tracker/services/open_user_box.dart';
 import 'package:expense_tracker/helper/auth_snackbar.dart';
+import 'package:expense_tracker/helper/helper_dialog.dart';
 import 'package:expense_tracker/widgets/my_elevated_buttom.dart';
 import 'package:expense_tracker/widgets/my_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -33,32 +33,16 @@ class _SignUpFormState extends State<SignUpForm> {
   Widget build(BuildContext context) {
     return BlocConsumer<SignupUserCubit, SignupState>(
       listener: (context, state) async {
-        if(state is SignupLoading) {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => AlertDialog(
-              content: SizedBox(
-                height: 100,
-                width: 200,
-                child: Row(
-                  children: const [
-                    CircularProgressIndicator(),
-                    SizedBox(width: 16),
-                    Text('Signing up...'),
-                  ],
-                ),
-              ),
-            ),
-          );
-        } else if(state is SignupSuccess) {
+        if (state is SignupLoading) {
+          loadingIndicator(context, message: 'Signing up...');
+        } else if (state is SignupSuccess) {
           Navigator.of(context).pop(); // Close the loading dialog
           // Then navigate to AuthPage
           Navigator.pushNamed(context, AuthPage.authRoute);
-          log('Box opened successfully for user: ${state.user.email}');
-        } else if(state is SignupError) {
+          // log('Box opened successfully for user: ${state.user.email}');
+        } else if (state is SignupError) {
           Navigator.of(context).pop(); // Close the loading dialog
-          showSnackBar(context, state.errorMessage );
+          showSnackBar(context, state.errorMessage);
         }
       },
       builder: (context, state) {

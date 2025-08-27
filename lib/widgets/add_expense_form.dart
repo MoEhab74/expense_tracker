@@ -94,8 +94,9 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
                   _formKey.currentState!.save();
                   // Add logic here
                   // Here we will trigger the cubit
-                  context.read<AddExpenseCubit>().addExpense(
+                  BlocProvider.of<AddExpenseCubit>(context).addExpense(
                     expense: Expense(
+                      // userID is FirebaseAuth.instance.currentUser!.email!
                       userId: FirebaseAuth.instance.currentUser!.email!,
                       title: _titleController.text,
                       amount: double.tryParse(_amountController.text) ?? 0.0,
@@ -106,7 +107,7 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
                     ),
                   );
                   // Fetch the expenses again
-                  context.read<ExpensesCubit>().fetchAllExpenses();
+                  BlocProvider.of<ExpensesCubit>(context).fetchAllExpenses();
                 } else {
                   autovalidateMode = AutovalidateMode.always;
                   setState(() {
