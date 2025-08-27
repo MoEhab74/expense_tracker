@@ -1,7 +1,9 @@
+import 'package:expense_tracker/cubits/expenses_cubit/expenses_cubit.dart';
 import 'package:expense_tracker/on_boarding/on_boarding2.dart';
 import 'package:expense_tracker/views/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -10,15 +12,18 @@ class AuthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return HomeView();
-          }
-          return OnBoarding2();
-        },
+    return BlocProvider(
+      create: (context) => ExpensesCubit(),
+      child: Scaffold(
+        body: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return HomeView();
+            }
+            return OnBoarding2();
+          },
+        ),
       ),
     );
   }

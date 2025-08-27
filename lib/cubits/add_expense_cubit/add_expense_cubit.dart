@@ -10,8 +10,9 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
 
   void addExpense({required Expense expense}) async {
     try {
+      // userId ===> email
       // Store the Expense in your local database ===> in the box that you created
-      var userExpensesBox = getUserBox(userId: expense.userId);
+      var userExpensesBox = getUserBox(email: expense.userId);
       // Create a unique ID for the new expense
       final counter = userExpensesBox.length + 1;
       final expenseId = 'EXP$counter';

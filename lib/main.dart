@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:expense_tracker/auth/auth_page.dart';
 import 'package:expense_tracker/auth/login_page.dart';
 import 'package:expense_tracker/auth/signup_page.dart';
+import 'package:expense_tracker/cubits/expenses_cubit/expenses_cubit.dart';
 import 'package:expense_tracker/firebase_options.dart';
 import 'package:expense_tracker/helper/simple_observer.dart';
 import 'package:expense_tracker/models/expense_model.dart';
@@ -15,7 +16,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive_flutter/adapters.dart';
 
-void main() async {
+void main(dynamic context) async {
   // Make sure that the Flutter binding is initialized before the app starts and it's ready to display the splash screen
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -29,8 +30,8 @@ void main() async {
   log('Registered ExpenseAdapter');
   // Observer for all cubits
   Bloc.observer = SimpleBlocObserver();
-  runApp(const MyApp());
-}
+    runApp(const MyApp());
+  }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});

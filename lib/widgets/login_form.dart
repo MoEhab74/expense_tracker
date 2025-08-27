@@ -39,11 +39,9 @@ class _LoginFormState extends State<LoginForm> {
         if (state is LoginSuccess)  {
           Navigator.pop(context); // Close the loading dialog
           // Open user box first
-          // await openBox(state)
-          await openUserBox(userId:state.user.uid);
           // Then navigate to AuthPage
           Navigator.pushNamed(context, AuthPage.authRoute);
-          log('Box opened successfully for user: ${state.user.uid}');
+          log('Box opened successfully for user: ${state.user.email}');
         }
         if (state is LoginError) {
           Navigator.pop(context); // Close the loading dialog

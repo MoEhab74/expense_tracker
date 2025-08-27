@@ -1,9 +1,11 @@
+import 'package:expense_tracker/cubits/expenses_cubit/expenses_cubit.dart';
 import 'package:expense_tracker/widgets/add_expense_bottom_sheet.dart';
 import 'package:expense_tracker/views/statistics_view.dart';
 import 'package:expense_tracker/widgets/home_view_stack.dart';
 import 'package:expense_tracker/widgets/home_view_text.dart';
-import 'package:expense_tracker/widgets/transactions_listview.dart';
+import 'package:expense_tracker/widgets/expenses_listview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeView extends StatefulWidget {
@@ -16,6 +18,13 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   int selectedIndex = 0;
+  @override
+  void initState() {
+    // Get the expenses before you build the widget
+    context.read<ExpensesCubit>().fetchAllExpenses();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +88,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
               ),
-              HomeTransactionsListView(),
+              HomeExpensesListViewBuilder(),
             ],
           ),
           StatisticsView(),

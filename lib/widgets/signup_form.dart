@@ -53,11 +53,9 @@ class _SignUpFormState extends State<SignUpForm> {
           );
         } else if(state is SignupSuccess) {
           Navigator.of(context).pop(); // Close the loading dialog
-          // Open user box first
-          await openUserBox(userId:state.user.uid);
           // Then navigate to AuthPage
           Navigator.pushNamed(context, AuthPage.authRoute);
-          log('Box opened successfully for user: ${state.user.uid}');
+          log('Box opened successfully for user: ${state.user.email}');
         } else if(state is SignupError) {
           Navigator.of(context).pop(); // Close the loading dialog
           showSnackBar(context, state.errorMessage );

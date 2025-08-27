@@ -1,5 +1,6 @@
 import 'package:expense_tracker/cubits/signup_cubit/signup_states.dart';
 import 'package:expense_tracker/helper/auth_snackbar.dart';
+import 'package:expense_tracker/services/open_user_box.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,8 @@ class SignupUserCubit extends Cubit<SignupState> {
     try {
       final credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+          // Open user box first
+          await openUserBox(email: credential.user!.email!);
       emit(SignupSuccess(user: credential.user!));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

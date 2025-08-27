@@ -7,23 +7,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ExpensesCubit extends Cubit<ExpensesState> {
   ExpensesCubit() : super(ExpensesInitial());
 
-  List<Expense>? _expenses ;
-  final String _userID = FirebaseAuth.instance.currentUser!.uid;
+  List<Expense>? expenses ;
+  final String _userEmail = FirebaseAuth.instance.currentUser!.email!;
 
   // Fetch all expenses method 
 
   void fetchAllExpenses() {
     // Get the current user's expenses box
-    var userExpenses = getUserBox(userId: _userID);
+    var userExpenses = getUserBox(email: _userEmail);
     // Convert the Iterable<Expense> to a List<Expense>
-    _expenses = userExpenses.values.toList();
+    expenses = userExpenses.values.toList();
     // tell the ui that the expenses have been loaded
-    emit(ExpensesLoadedSuccessfully(_expenses!));
+    emit(ExpensesLoadedSuccessfully(expenses!));
   }
 
   // Clear all expenses method
   void clearAllExpenses() {
-    _expenses?.clear();
+    expenses?.clear();
     // Return an empty list of expenses
     emit(ExpensesLoadedSuccessfully([]));
   }
@@ -32,9 +32,9 @@ class ExpensesCubit extends Cubit<ExpensesState> {
 
 
   void searchForExpenseByTitle(String title){
-    if(_expenses == null) return;
+    if(expenses == null) return;
     final query = title.toLowerCase();
-    final filteredExpenses = _expenses!.where((expense){
+    final filteredExpenses = expenses!.where((expense){
       return expense.title.toLowerCase().contains(query);
     });
     emit(ExpensesLoadedSuccessfully(filteredExpenses.toList()));

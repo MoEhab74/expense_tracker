@@ -1,4 +1,5 @@
 import 'package:expense_tracker/cubits/add_expense_cubit/add_expense_cubit.dart';
+import 'package:expense_tracker/cubits/expenses_cubit/expenses_cubit.dart';
 import 'package:expense_tracker/models/expense_model.dart';
 import 'package:expense_tracker/widgets/my_elevated_buttom.dart';
 import 'package:expense_tracker/widgets/my_text_form_field.dart';
@@ -95,7 +96,7 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
                   // Here we will trigger the cubit
                   context.read<AddExpenseCubit>().addExpense(
                     expense: Expense(
-                      userId: FirebaseAuth.instance.currentUser!.uid,
+                      userId: FirebaseAuth.instance.currentUser!.email!,
                       title: _titleController.text,
                       amount: double.tryParse(_amountController.text) ?? 0.0,
                       date: DateTime.now().toString(),
@@ -104,6 +105,8 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
                       // expenseID is generated in the cubit
                     ),
                   );
+                  // Fetch the expenses again
+                  context.read<ExpensesCubit>().fetchAllExpenses();
                 } else {
                   autovalidateMode = AutovalidateMode.always;
                   setState(() {
