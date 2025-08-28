@@ -1,6 +1,5 @@
 import 'package:expense_tracker/cubits/login_cubit/login_states.dart';
 import 'package:expense_tracker/helper/auth_snackbar.dart';
-import 'package:expense_tracker/services/open_user_box.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +25,8 @@ class LoginUserCubit extends Cubit<LoginState> {
       );
 
       // await openBox(state)
-      await openUserBox(userID: credential.user!.email!);
+      // await openUserBox(userID: credential.user!.email!);
+
       // Navigator.pushNamed(context, HomeView.homeRoute);
       emit(LoginSuccess(user: credential.user!));
       showSnackBar(

@@ -11,46 +11,49 @@ class ExpenseListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () => {
-        // Show transaction details and pass the current transaction to the details screen
-        showModalBottomSheet(
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          context: context,
-          builder: (context) {
-            return ExpensesDetailsSheet();
-          },
-        ),
-      },
-      tileColor: Theme.of(context).colorScheme.primary,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      title: Text(
-        expense.title,
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.onPrimary,
-          fontSize: 16,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-      subtitle: Text(
-        expense.date.toString().substring(0, 11),
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.onPrimary,
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      trailing: IconButton(
-        onPressed: () {
-          // Delete expense
-          expense.delete();
-          // Fetch all expenses to update the list of expenses
-          context.read<ExpensesCubit>().fetchAllExpenses();
+    return SizedBox(
+      height: 80,
+      child: ListTile(
+        onTap: () => {
+          // Show transaction details and pass the current transaction to the details screen
+          showModalBottomSheet(
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            context: context,
+            builder: (context) {
+              return ExpensesDetailsSheet(expense: expense,);
+            },
+          ),
         },
-        icon: Icon(
-          Icons.delete,
-          size: 32,
-          color: Theme.of(context).colorScheme.onPrimary,
+        tileColor: Theme.of(context).colorScheme.primary,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        title: Text(
+          expense.title,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        subtitle: Text(
+          expense.date.toString().substring(0, 11),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        trailing: IconButton(
+          onPressed: () {
+            // Delete expense
+            expense.delete();
+            // Fetch all expenses to update the list of expenses
+            BlocProvider.of<ExpensesCubit>(context).fetchAllExpenses();
+          },
+          icon: Icon(
+            Icons.delete,
+            size: 32,
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:expense_tracker/helper/constants.dart';
 import 'package:expense_tracker/views/profile_view.dart';
 import 'package:expense_tracker/widgets/balance_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,7 +36,7 @@ class HomeViewStack extends StatelessWidget {
                         Navigator.pushNamed(context, ProfileView.profileRoute);
                       },
                       child: Text(
-                        FirebaseAuth.instance.currentUser?.email ?? 'User',
+                        currentUser,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 20,

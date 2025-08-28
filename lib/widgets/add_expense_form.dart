@@ -17,15 +17,7 @@ class AddExpenseForm extends StatefulWidget {
 class _AddExpenseFormState extends State<AddExpenseForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _titleController = TextEditingController();
-
-  final TextEditingController _amountController = TextEditingController();
-
-  final TextEditingController _descriptionController = TextEditingController();
-
-  final TextEditingController _categoryController = TextEditingController();
-
-  final TextEditingController _dateController = TextEditingController();
+  String? _title, _amount, _description, _category, _date;
   // To show an error in case of a wrong input
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
@@ -40,7 +32,6 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
             Text('Add Expense', style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 16),
             MyTextFormField(
-              controller: _titleController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a title';
@@ -48,11 +39,16 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
                 return null;
               },
               hintText: 'Enter Title',
+              onSaved: (value) {
+                _title = value;
+              },
             ),
             const SizedBox(height: 16),
 
             MyTextFormField(
-              controller: _amountController,
+              onSaved: (value) {
+                _amount = value;
+              },
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter an amount';
@@ -60,27 +56,25 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
                 return null;
               },
               hintText: 'Enter Amount',
+              
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 16),
 
             MyTextFormField(
-              controller: _descriptionController,
-              hintText: 'Enter Description',
+                hintText: 'Enter Description',
               maxLines: 4,
+              onSaved: (value) {
+                _description = value;
+              },
             ),
             const SizedBox(height: 16),
 
             MyTextFormField(
-              controller: _categoryController,
               hintText: 'Enter Category',
-            ),
-            const SizedBox(height: 16),
-
-            MyTextFormField(
-              controller: _dateController,
-              hintText: 'Enter Date',
-              keyboardType: TextInputType.datetime,
+              onSaved: (value) {
+                _category = value;
+              },
             ),
             const SizedBox(height: 16),
 
@@ -98,16 +92,14 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
                     expense: Expense(
                       // userID is FirebaseAuth.instance.currentUser!.email!
                       userId: FirebaseAuth.instance.currentUser!.email!,
-                      title: _titleController.text,
-                      amount: double.tryParse(_amountController.text) ?? 0.0,
+                      title: _title!,
+                      amount: double.tryParse(_amount ?? '') ?? 0.0,
                       date: DateTime.now().toString(),
-                      category: _categoryController.text,
-                      description: _descriptionController.text,
+                      category: _category ?? 'Nothing',
+                      description: _description ?? 'No Description',
                       // expenseID is generated in the cubit
                     ),
                   );
-                  // Fetch the expenses again
-                  BlocProvider.of<ExpensesCubit>(context).fetchAllExpenses();
                 } else {
                   autovalidateMode = AutovalidateMode.always;
                   setState(() {

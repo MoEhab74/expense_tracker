@@ -1,7 +1,7 @@
 import 'package:expense_tracker/cubits/add_expense_cubit/add_expense_states.dart';
 import 'package:expense_tracker/models/expense_model.dart';
-import 'package:expense_tracker/services/open_user_box.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 
 class AddExpenseCubit extends Cubit<AddExpenseState> {
   AddExpenseCubit() : super(AddExpenseInitial());
@@ -12,7 +12,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     try {
       // userId ===> email
       // Store the Expense in your local database ===> in the box that you created
-      var userExpensesBox = getUserBox(userID: expense.userId);
+      var userExpensesBox = Hive.box<Expense>('user_expenses');
       // Create a unique ID for the new expense
       final counter = userExpensesBox.length + 1;
       final expenseId = 'EXP$counter';
