@@ -58,18 +58,6 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
               const SizedBox(height: 14),
               // Username fiel
-              MyTextFormField(
-                controller: userNameController,
-                validator: (value) {
-                  if (value?.isEmpty ?? true) {
-                    return 'Username is required';
-                  }
-                  return null;
-                },
-                prefixIcon: Icons.person,
-                hintText: 'Enter your username',
-              ),
-              const SizedBox(height: 16),
               // Email field
               MyTextFormField(
                 controller: emailController,

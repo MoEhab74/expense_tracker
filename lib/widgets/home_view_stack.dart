@@ -81,7 +81,6 @@ class _HomeViewStackState extends State<HomeViewStack> {
                               ElevatedButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
-                                  _searchController.clear();
 
                                   // Handle search action
                                   // Trigger the search method from the ExpensesCubit
@@ -90,10 +89,8 @@ class _HomeViewStackState extends State<HomeViewStack> {
                                   ).searchForExpenseByTitle(
                                     _searchController.text,
                                   );
-                                  // Fetch all new expenses after searching
-                                  BlocProvider.of<ExpensesCubit>(
-                                    context,
-                                  ).fetchAllExpenses();
+                                  
+                                  _searchController.clear();
                                 },
                                 child: const Text('OK'),
                               ),
@@ -102,6 +99,7 @@ class _HomeViewStackState extends State<HomeViewStack> {
                         ),
                       ),
                     );
+                 
                   },
                 ),
               ],

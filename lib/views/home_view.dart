@@ -83,6 +83,13 @@ class _HomeViewState extends State<HomeView> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         HomeViewText(text: 'History of transactions'),
+                        GestureDetector(
+                          onTap: () {
+                            // Handle "See all" tap
+                            context.read<ExpensesCubit>().fetchAllExpenses(); // reset list
+                          },
+                          child: HomeViewText(text: 'See all'),
+                        ),
                       ],
                     ),
                   ),

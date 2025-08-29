@@ -18,19 +18,22 @@ class HomeExpensesListViewBuilder extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return SliverList(
-          delegate: SliverChildBuilderDelegate((context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ExpenseListTile(
-                  expense: context.read<ExpensesCubit>().expenses![index],
+        if (state is ExpensesLoadedSuccessfully) {
+          return SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ExpenseListTile(expense: state.expenses[index]),
                 ),
-              ),
-            );
-          }, childCount: context.read<ExpensesCubit>().expenses!.length),
-        );
+              );
+            }, childCount: state.expenses.length),
+          );
+        } 
+        return const SliverToBoxAdapter(
+            child: Center(child: CircularProgressIndicator()),
+          );
       },
     );
   }
