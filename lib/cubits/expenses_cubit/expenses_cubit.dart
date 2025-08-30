@@ -1,7 +1,5 @@
 import 'package:expense_tracker/cubits/expenses_cubit/expenses_states.dart';
 import 'package:expense_tracker/models/expense_model.dart';
-import 'package:expense_tracker/services/open_user_box.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 
@@ -9,6 +7,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   ExpensesCubit() : super(ExpensesInitial());
 
   List<Expense>? expenses;
+  double totalExpenses = 0;
   // final String _userEmail = FirebaseAuth.instance.currentUser!.email!;
 
   // Fetch all expenses method
@@ -28,7 +27,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   void clearAllExpenses() {
     expenses?.clear();
     // Return an empty list of expenses
-    emit(ExpensesLoadedSuccessfully([]));
+    emit(ExpensesLoadedSuccessfully(expenses!));
   }
 
   // Search for an expense method
@@ -40,5 +39,31 @@ class ExpensesCubit extends Cubit<ExpensesState> {
       return expense.title.toLowerCase().contains(query);
     });
     emit(ExpensesLoadedSuccessfully(filteredExpenses.toList()));
+  }
+
+  // Filter expenses by category
+  void filterExpensesByCategory(String category) {
+    if (expenses == null) return;
+    final filteredExpenses = expenses!.where((expense) {
+      return expense.category.toLowerCase() == category.toLowerCase();
+    });
+    emit(ExpensesLoadedSuccessfully(filteredExpenses.toList()));
+  }
+
+  // Get the total expenses
+  double getTotalExpenses() {
+    if (expenses == null) return 0;
+    totalExpenses = expenses!.fold(
+      0,
+      (total, expense) => total + expense.amount,
+    );
+    return totalExpenses;
+  }
+
+  // Get the last expense amount
+
+  double getLastExpenseAmount() {
+    if (expenses == null || expenses!.isEmpty) return 0;
+    return expenses!.last.amount;
   }
 }

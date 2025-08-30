@@ -18,8 +18,6 @@ class HomeViewStack extends StatefulWidget {
 class _HomeViewStackState extends State<HomeViewStack> {
   final TextEditingController _searchController = TextEditingController();
 
-
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -89,7 +87,7 @@ class _HomeViewStackState extends State<HomeViewStack> {
                                   ).searchForExpenseByTitle(
                                     _searchController.text,
                                   );
-                                  
+
                                   _searchController.clear();
                                 },
                                 child: const Text('OK'),
@@ -99,7 +97,6 @@ class _HomeViewStackState extends State<HomeViewStack> {
                         ),
                       ),
                     );
-                 
                   },
                 ),
               ],
@@ -110,7 +107,11 @@ class _HomeViewStackState extends State<HomeViewStack> {
           top: 116,
           left: 12,
           right: 12,
-          child: SizedBox(width: 300, height: 200, child: BalanceCard()),
+          child: SizedBox(
+            width: 300,
+            height: 200,
+            child: BalanceCard(),
+          ), // Rebuild BalanceCard according to the total expenses
         ),
       ],
     );
@@ -136,27 +137,15 @@ class SearchField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: 'Search...',
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Theme.of(
-              context,
-            ).colorScheme.primary,
-          ),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
           borderRadius: BorderRadius.circular(20),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Theme.of(
-              context,
-            ).colorScheme.primary,
-          ),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
           borderRadius: BorderRadius.circular(20),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Theme.of(
-              context,
-            ).colorScheme.error,
-          ),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.error),
           borderRadius: BorderRadius.circular(20),
         ),
         border: const OutlineInputBorder(),

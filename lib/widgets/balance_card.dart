@@ -1,76 +1,121 @@
+import 'package:expense_tracker/cubits/expenses_cubit/expenses_cubit.dart';
+import 'package:expense_tracker/cubits/expenses_cubit/expenses_states.dart';
 import 'package:expense_tracker/widgets/home_card_info.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BalanceCard extends StatelessWidget {
-  const BalanceCard({
-    super.key,
-  });
+  const BalanceCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 10,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      color: Theme.of(context).colorScheme.primary,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 14,
-              vertical: 12,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                HomeCardInfo(
-                  balanceText: 'Total Balance',
-                  balanceAmount: 'Rs. 0.00',
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.more_horiz,
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onPrimary,
-                  ),
-                ),
-              ],
-            ),
+    return BlocBuilder<ExpensesCubit, ExpensesState>(
+      builder: (context, state) {
+        return Card(
+          elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
           ),
-          SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 14,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                HomeCardInfo(
-                  balanceText: 'Income',
-                  balanceAmount: 'Rs. 0.00',
-                  incomeIxpenseColor: Theme.of(
-                    context,
-                  ).colorScheme.onPrimary,
-                  amountWeight: FontWeight.w500,
-                  amountSize: 16,
+          color: Theme.of(context).colorScheme.primary,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 12,
                 ),
-                HomeCardInfo(
-                  balanceText: 'Expense',
-                  balanceAmount: 'Rs. 0.00',
-                  incomeIxpenseColor: Theme.of(
-                    context,
-                  ).colorScheme.onPrimary,
-                  amountWeight: FontWeight.w500,
-                  amountSize: 16,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    HomeCardInfo(
+                      balanceText: 'Total Balance',
+                      balanceAmount:
+                          '${context.read<ExpensesCubit>().getTotalExpenses().toStringAsFixed(3)} \$',
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        // Delete account action
+                        deleteUserAccountDialog(context);
+                      },
+                      child: Text(
+                        'Delete Account',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    HomeCardInfo(
+                      balanceText: 'Last Income',
+                      balanceAmount:
+                          '${context.read<ExpensesCubit>().getLastExpenseAmount().toStringAsFixed(3)} \$',
+                      incomeIxpenseColor: Theme.of(
+                        context,
+                      ).colorScheme.onPrimary,
+                      amountWeight: FontWeight.w500,
+                      amountSize: 16,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        // Clear expenses action
+                        context.read<ExpensesCubit>().clearAllExpenses();
+                        // context.read<ExpensesCubit>().fetchAllExpenses();
+                      },
+                      child: Text(
+                        'Clear expenses',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
+    );
+  }
+
+  void deleteUserAccountDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Delete Account'),
+          content: Text('Are you sure you want to delete your account?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Handle account deletion
+                FirebaseAuth.instance.currentUser!.delete();
+                Navigator.of(context).pop();
+              },
+              child: Text('Delete'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
