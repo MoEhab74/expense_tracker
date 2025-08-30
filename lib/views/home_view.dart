@@ -1,4 +1,5 @@
 import 'package:expense_tracker/cubits/expenses_cubit/expenses_cubit.dart';
+import 'package:expense_tracker/views/see_all_expenses_view.dart';
 import 'package:expense_tracker/widgets/add_expense_bottom_sheet.dart';
 import 'package:expense_tracker/views/statistics_view.dart';
 import 'package:expense_tracker/widgets/home_view_stack.dart';
@@ -85,8 +86,17 @@ class _HomeViewState extends State<HomeView> {
                         HomeViewText(text: 'History of transactions'),
                         GestureDetector(
                           onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const SeeAllExpensesView(),
+                              ),
+                            );
                             // Handle "See all" tap
-                            context.read<ExpensesCubit>().fetchAllExpenses(); // reset list
+                            context
+                                .read<ExpensesCubit>()
+                                .fetchAllExpenses(); // reset list
                           },
                           child: HomeViewText(text: 'See all'),
                         ),
