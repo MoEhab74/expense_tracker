@@ -1,5 +1,4 @@
 import 'package:expense_tracker/cubits/add_expense_cubit/add_expense_cubit.dart';
-import 'package:expense_tracker/cubits/expenses_cubit/expenses_cubit.dart';
 import 'package:expense_tracker/models/expense_model.dart';
 import 'package:expense_tracker/widgets/my_elevated_buttom.dart';
 import 'package:expense_tracker/widgets/my_text_form_field.dart';
@@ -17,9 +16,18 @@ class AddExpenseForm extends StatefulWidget {
 class _AddExpenseFormState extends State<AddExpenseForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String? _title, _amount, _description, _category, _date;
+  String? _title, _amount, _description, _category;
   // To show an error in case of a wrong input
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+
+  static const List<String> categories = [
+    'Food',
+    'Transport',
+    'Shopping',
+    'Bills',
+    'Entertainment',
+    'Other',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -56,13 +64,13 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
                 return null;
               },
               hintText: 'Enter Amount',
-              
+
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 16),
 
             MyTextFormField(
-                hintText: 'Enter Description',
+              hintText: 'Enter Description',
               maxLines: 4,
               onSaved: (value) {
                 _description = value;
@@ -70,10 +78,53 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
             ),
             const SizedBox(height: 16),
 
-            MyTextFormField(
-              hintText: 'Enter Category',
-              onSaved: (value) {
-                _category = value;
+            DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.primary,
+                    width: 2,
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.primary,
+                    width: 2,
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.error,
+                    width: 2,
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.error,
+                    width: 2,
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                ),
+                labelText: 'Category',
+                border: OutlineInputBorder(),
+              ),
+              initialValue: _category,
+              items: categories.map((cat) {
+                return DropdownMenuItem(value: cat, child: Text(cat));
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  _category = value;
+                });
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please select a category';
+                }
+                return null;
               },
             ),
             const SizedBox(height: 16),
@@ -102,9 +153,7 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
                   );
                 } else {
                   autovalidateMode = AutovalidateMode.always;
-                  setState(() {
-                    
-                  });
+                  setState(() {});
                 }
               },
             ),
