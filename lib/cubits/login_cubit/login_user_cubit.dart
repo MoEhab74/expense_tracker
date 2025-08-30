@@ -1,5 +1,5 @@
 import 'package:expense_tracker/cubits/login_cubit/login_states.dart';
-import 'package:expense_tracker/helper/auth_snackbar.dart';
+import 'package:expense_tracker/helper/helper_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

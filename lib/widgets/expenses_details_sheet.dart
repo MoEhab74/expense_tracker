@@ -70,6 +70,9 @@
 // }
 
 import 'package:expense_tracker/models/expense_model.dart';
+import 'package:expense_tracker/views/edit_expense_view.dart';
+import 'package:expense_tracker/widgets/action_outlined_buttom.dart';
+import 'package:expense_tracker/widgets/simple_outlined_buttom.dart';
 import 'package:flutter/material.dart';
 
 class ExpensesDetailsSheet extends StatelessWidget {
@@ -89,18 +92,18 @@ class ExpensesDetailsSheet extends StatelessWidget {
               child: Text(
                 '${expense.amount}\$',
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
             ),
             const SizedBox(height: 16),
             Center(
               child: Text(
                 'Transaction Details',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
               ),
             ),
             const SizedBox(height: 20),
@@ -110,9 +113,9 @@ class ExpensesDetailsSheet extends StatelessWidget {
             // Date
             Text(
               'Date:',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
             Text(
@@ -124,9 +127,9 @@ class ExpensesDetailsSheet extends StatelessWidget {
             // Category
             Text(
               'Category:',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
             Text(
@@ -138,15 +141,27 @@ class ExpensesDetailsSheet extends StatelessWidget {
             // Description
             Text(
               'Description:',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
             Text(
               expense.description ?? 'No Description',
               style: Theme.of(context).textTheme.bodyMedium,
               softWrap: true,
+            ),
+            const SizedBox(height: 24),
+            
+            Center(
+              child: ActionOutlinedButtom(text: 'Edit',onPressed: () {
+                // Navigate to the edit expense view
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => EditExpenseView(expense: expense,),
+                  ),
+                );
+              },),
             ),
           ],
         ),

@@ -8,19 +8,19 @@ class Expense extends HiveObject {
   final String userId;
 
   @HiveField(1)
-  final String title;
+  String title;
 
   @HiveField(2)
-  final double amount;
+  double amount;
 
   @HiveField(3)
   final String date;
 
   @HiveField(4)
-  final String category;
+  String category;
 
   @HiveField(5)
-  final String description;
+  String description;
 
   @HiveField(6)
   final String? expenseID;
