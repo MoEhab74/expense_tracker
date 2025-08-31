@@ -19,10 +19,12 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   int selectedIndex = 0;
+  List<String> categories = [];
   @override
   void initState() {
     // Get the expenses before you build the widget
     context.read<ExpensesCubit>().fetchAllExpenses();
+    categories = BlocProvider.of<ExpensesCubit>(context).categories;
     super.initState();
   }
 

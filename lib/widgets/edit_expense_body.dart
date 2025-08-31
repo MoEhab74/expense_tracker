@@ -27,7 +27,7 @@ class _EditExpenseBodyState extends State<EditExpenseBody> {
         children: [
           MyTextFormField(
             controller: _titleController,
-            hintText: widget.expense.title,
+            hintText: widget.expense.title ,
           ),
           const SizedBox(height: 16),
 
@@ -40,14 +40,14 @@ class _EditExpenseBodyState extends State<EditExpenseBody> {
 
           MyTextFormField(
             controller: _descriptionController,
-            hintText: widget.expense.description,
+            hintText: widget.expense.description ?? 'Update description',
             maxLines: 4,
           ),
           const SizedBox(height: 16),
 
           MyTextFormField(
             controller: _categoryController,
-            hintText: widget.expense.category,
+            hintText: widget.expense.category ?? 'Update category',
           ),
           const SizedBox(height: 24),
           ActionOutlinedButtom(

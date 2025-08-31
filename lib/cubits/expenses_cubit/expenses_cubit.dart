@@ -10,6 +10,15 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   double totalExpenses = 0;
   // final String _userEmail = FirebaseAuth.instance.currentUser!.email!;
 
+  List<String> categories = [
+    'Food',
+    'Transport',
+    'Shopping',
+    'Bills',
+    'Entertainment',
+    'Other',
+  ];
+
   // Fetch all expenses method
 
   void fetchAllExpenses() {
@@ -45,7 +54,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   void filterExpensesByCategory(String category) {
     if (expenses == null) return;
     final filteredExpenses = expenses!.where((expense) {
-      return expense.category.toLowerCase() == category.toLowerCase();
+      return expense.category!.toLowerCase() == category.toLowerCase();
     });
     emit(ExpensesLoadedSuccessfully(filteredExpenses.toList()));
   }
@@ -65,5 +74,51 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   double getLastExpenseAmount() {
     if (expenses == null || expenses!.isEmpty) return 0;
     return expenses!.last.amount;
+  }
+
+  // Get the total amount for each category
+
+  Map<String, double> getTotalAmountByCategory() {
+    if (expenses == null) return {};
+    Map<String, double> totalAmountByCategory = {};
+    for (var expense in expenses!) {
+      if (totalAmountByCategory.containsKey(expense.category)) {
+        totalAmountByCategory[expense.category!] =
+            totalAmountByCategory[expense.category!]! + expense.amount;
+      } else {
+        totalAmountByCategory[expense.category!] = expense.amount;
+      }
+    }
+    return totalAmountByCategory;
+  }
+
+  // Get the biggest amount of expense
+
+  double getBiggestExpenseAmount() {
+    if (expenses == null || expenses!.isEmpty) return 0;
+    double biggestAmount = expenses!.first.amount;
+    for (var expense in expenses!) {
+      if (expense.amount > biggestAmount) {
+        biggestAmount = expense.amount;
+      }
+    }
+    return biggestAmount;
+  }
+
+  // Get the smallest amount of expense
+  double getSmallestExpenseAmount() {
+    if (expenses == null || expenses!.isEmpty) return 0;
+    double smallestAmount = expenses!.first.amount;
+    for (var expense in expenses!) {
+      if (expense.amount < smallestAmount) {
+        smallestAmount = expense.amount;
+      }
+    }
+    return smallestAmount;
+  }
+
+  double getAverageExpenseAmount() {
+    if (expenses == null || expenses!.isEmpty) return 0;
+    return getTotalExpenses() / expenses!.length;
   }
 }

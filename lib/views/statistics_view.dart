@@ -1,52 +1,26 @@
+import 'package:expense_tracker/cubits/expenses_cubit/expenses_cubit.dart';
+import 'package:expense_tracker/widgets/statistics_view_body.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class StatisticsView extends StatelessWidget {
+class StatisticsView extends StatefulWidget {
   const StatisticsView({super.key});
 
   @override
+  State<StatisticsView> createState() => _StatisticsViewState();
+}
+
+class _StatisticsViewState extends State<StatisticsView> {
+  // late Map<String, double> dataMap;
+
+  @override
   Widget build(BuildContext context) {
+    final dataMap = context.read<ExpensesCubit>().getTotalAmountByCategory();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                Text(
-                  'Statistics View',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Container(
-                    color: Colors.blue,
-                    height: 100,
-                    child: const Center(child: Text('Chart 1')),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    color: Colors.blue,
-                    height: 100,
-                    child: const Center(child: Text('Chart 1')),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Text(
-                  'Statistics View',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-              ],
-            ),
-          ],
-        ),
+        child: StatisticsViewBody(dataMap: dataMap),
       ),
     );
   }

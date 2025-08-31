@@ -72,7 +72,6 @@
 import 'package:expense_tracker/models/expense_model.dart';
 import 'package:expense_tracker/views/edit_expense_view.dart';
 import 'package:expense_tracker/widgets/action_outlined_buttom.dart';
-import 'package:expense_tracker/widgets/simple_outlined_buttom.dart';
 import 'package:flutter/material.dart';
 
 class ExpensesDetailsSheet extends StatelessWidget {

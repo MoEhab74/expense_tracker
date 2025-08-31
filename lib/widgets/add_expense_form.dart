@@ -1,4 +1,5 @@
 import 'package:expense_tracker/cubits/add_expense_cubit/add_expense_cubit.dart';
+import 'package:expense_tracker/cubits/expenses_cubit/expenses_cubit.dart';
 import 'package:expense_tracker/models/expense_model.dart';
 import 'package:expense_tracker/widgets/my_elevated_buttom.dart';
 import 'package:expense_tracker/widgets/my_text_form_field.dart';
@@ -20,14 +21,13 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
   // To show an error in case of a wrong input
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
-  static const List<String> categories = [
-    'Food',
-    'Transport',
-    'Shopping',
-    'Bills',
-    'Entertainment',
-    'Other',
-  ];
+  List<String> categories = [];
+
+   @override
+  void initState() {
+    categories = BlocProvider.of<ExpensesCubit>(context).categories;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

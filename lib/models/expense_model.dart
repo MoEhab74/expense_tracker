@@ -17,10 +17,10 @@ class Expense extends HiveObject {
   final String date;
 
   @HiveField(4)
-  String category;
+  String? category;
 
   @HiveField(5)
-  String description;
+  String? description;
 
   @HiveField(6)
   final String? expenseID;

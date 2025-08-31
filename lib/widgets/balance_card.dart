@@ -31,7 +31,7 @@ class BalanceCard extends StatelessWidget {
                     HomeCardInfo(
                       balanceText: 'Total Balance',
                       balanceAmount:
-                          '${context.read<ExpensesCubit>().getTotalExpenses().toStringAsFixed(3)} \$',
+                          '${context.read<ExpensesCubit>().getTotalExpenses().toStringAsFixed(2)} \$',
                     ),
                     GestureDetector(
                       onTap: () {
@@ -59,7 +59,7 @@ class BalanceCard extends StatelessWidget {
                     HomeCardInfo(
                       balanceText: 'Last Income',
                       balanceAmount:
-                          '${context.read<ExpensesCubit>().getLastExpenseAmount().toStringAsFixed(3)} \$',
+                          '${context.read<ExpensesCubit>().getLastExpenseAmount().toStringAsFixed(2)} \$',
                       incomeIxpenseColor: Theme.of(
                         context,
                       ).colorScheme.onPrimary,
