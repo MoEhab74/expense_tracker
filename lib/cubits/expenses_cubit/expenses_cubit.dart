@@ -89,6 +89,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
         totalAmountByCategory[expense.category!] = expense.amount;
       }
     }
+    // emit(ExpensesLoadedSuccessfully(expenses!));
     return totalAmountByCategory;
   }
 
