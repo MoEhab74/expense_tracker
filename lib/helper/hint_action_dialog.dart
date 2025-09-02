@@ -3,18 +3,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void deleteUserAccountDialog(BuildContext context) {
+void logOutHintDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Delete Account'),
-          content: Text('Are you sure you want to delete your account?'),
+          title: Text('Log out'),
+          content: Text('Are you sure you want to log out?'),
           actions: [
             TextButton(
               onPressed: () async {
                 // Handle account deletion
-                await FirebaseAuth.instance.currentUser!.delete();
+                await FirebaseAuth.instance.signOut();
                 Navigator.of(context).pop();
               },
               child: Text('Delete'),

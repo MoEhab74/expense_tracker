@@ -38,18 +38,12 @@ class _HomeViewStackState extends State<HomeViewStack> {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        // Navigate to profile page
-                        Navigator.pushNamed(context, ProfileView.profileRoute);
-                      },
-                      child: Text(
-                        FirebaseAuth.instance.currentUser!.email!,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w900,
-                        ),
+                    Text(
+                      FirebaseAuth.instance.currentUser!.email!,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w900,
                       ),
                     ),
                   ],

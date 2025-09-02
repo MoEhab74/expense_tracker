@@ -1,3 +1,4 @@
+import 'package:expense_tracker/auth/auth_page.dart';
 import 'package:expense_tracker/cubits/expenses_cubit/expenses_cubit.dart';
 import 'package:expense_tracker/cubits/expenses_cubit/expenses_states.dart';
 import 'package:expense_tracker/helper/hint_action_dialog.dart';
@@ -34,9 +35,28 @@ class BalanceCard extends StatelessWidget {
                       balanceAmount:
                           '${context.read<ExpensesCubit>().getTotalExpenses().toStringAsFixed(2)} \$',
                     ),
-                    Row(children: [
-                      
-                    ],)
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            logOutHintDialog(context);
+                          },
+                          child: Icon(
+                            Icons.logout,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          'Log out',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),

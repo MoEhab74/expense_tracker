@@ -148,7 +148,7 @@ class _MyAppState extends State<MyApp> {
           OnBoardingView.onBoardingRoute: (context) => OnBoardingView(),
           LoginPage.loginRoute: (context) => LoginPage(),
           SignUpPage.signupRoute: (context) => SignUpPage(),
-          ProfileView.profileRoute: (context) => ProfileView(),
+          // ProfileView.profileRoute: (context) => ProfileView(),
           AuthPage.authRoute: (context) => AuthPage(),
         },
         initialRoute: AuthPage.authRoute,
