@@ -31,10 +31,10 @@ class _HomeViewStackState extends State<HomeViewStack> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Good morning,',
+                      'Good Morning,',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onPrimary,
-                        fontSize: 14,
+                        fontSize: 16,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -95,7 +95,7 @@ class _HomeViewStackState extends State<HomeViewStack> {
           ),
         ),
         Positioned(
-          top: 116,
+          top: 120,
           left: 12,
           right: 12,
           child: SizedBox(

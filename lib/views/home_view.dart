@@ -77,7 +77,7 @@ class _HomeViewState extends State<HomeView> {
           CustomScrollView(
             slivers: [
               SliverToBoxAdapter(child: HomeViewStack()),
-              const SliverToBoxAdapter(child: SizedBox(height: 20)),
+              // const SliverToBoxAdapter(child: SizedBox(height: 20)),
               SliverToBoxAdapter(
                 child: SafeArea(
                   child: Padding(
