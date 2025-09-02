@@ -1,5 +1,6 @@
 import 'package:expense_tracker/cubits/expenses_cubit/expenses_cubit.dart';
 import 'package:expense_tracker/cubits/expenses_cubit/expenses_states.dart';
+import 'package:expense_tracker/helper/hint_action_dialog.dart';
 import 'package:expense_tracker/widgets/home_card_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -33,20 +34,9 @@ class BalanceCard extends StatelessWidget {
                       balanceAmount:
                           '${context.read<ExpensesCubit>().getTotalExpenses().toStringAsFixed(2)} \$',
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        // Delete account action
-                        deleteUserAccountDialog(context);
-                      },
-                      child: Text(
-                        'Delete Account',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
+                    Row(children: [
+                      
+                    ],)
                   ],
                 ),
               ),
@@ -69,7 +59,16 @@ class BalanceCard extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         // Clear expenses action
-                        clearExpensesDialog(context);
+                        // check first if there aren't any expenses
+                        if (BlocProvider.of<ExpensesCubit>(
+                          context,
+                        ).expenses!.isEmpty) {
+                          clearExpensesHintDialog(context);
+                        } else if ((BlocProvider.of<ExpensesCubit>(
+                          context,
+                        ).expenses!.isNotEmpty)) {
+                          clearExpensesDialog(context);
+                        }
                       },
                       child: Text(
                         'Clear expenses',
@@ -85,62 +84,6 @@ class BalanceCard extends StatelessWidget {
               ),
             ],
           ),
-        );
-      },
-    );
-  }
-
-  void deleteUserAccountDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Delete Account'),
-          content: Text('Are you sure you want to delete your account?'),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                // Handle account deletion
-                await FirebaseAuth.instance.currentUser!.delete();
-                Navigator.of(context).pop();
-              },
-              child: Text('Delete'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void clearExpensesDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Delete Expenses'),
-          content: Text('Are you sure you want to delete all expenses?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                // Handle account deletion
-                context.read<ExpensesCubit>().clearAllExpenses();
-                Navigator.of(context).pop();
-              },
-              child: Text('Delete'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
-            ),
-          ],
         );
       },
     );

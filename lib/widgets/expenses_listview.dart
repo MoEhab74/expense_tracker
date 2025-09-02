@@ -19,6 +19,19 @@ class HomeExpensesListViewBuilder extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is ExpensesLoadedSuccessfully) {
+          if (state.expenses.isEmpty) {
+            return const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 300,
+                child: Center(
+                  child: Text(
+                    'No expenses found',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                ),
+              ),
+            );
+          }
           return SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
               return Padding(
@@ -30,10 +43,10 @@ class HomeExpensesListViewBuilder extends StatelessWidget {
               );
             }, childCount: state.expenses.length),
           );
-        } 
+        }
         return const SliverToBoxAdapter(
-            child: Center(child: CircularProgressIndicator()),
-          );
+          child: Center(child: CircularProgressIndicator()),
+        );
       },
     );
   }
