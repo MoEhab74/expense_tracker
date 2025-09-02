@@ -84,6 +84,7 @@ import 'dart:developer';
 import 'package:expense_tracker/auth/auth_page.dart';
 import 'package:expense_tracker/auth/login_page.dart';
 import 'package:expense_tracker/auth/signup_page.dart';
+import 'package:expense_tracker/cubits/add_expense_cubit/add_expense_cubit.dart';
 import 'package:expense_tracker/cubits/expenses_cubit/expenses_cubit.dart';
 import 'package:expense_tracker/firebase_options.dart';
 import 'package:expense_tracker/helper/simple_observer.dart';
@@ -136,8 +137,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ExpensesCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => ExpensesCubit()),
+        BlocProvider(create: (context) => AddExpenseCubit())
+      ],
       child: MaterialApp(
         routes: {
           HomeView.homeRoute: (context) => HomeView(),

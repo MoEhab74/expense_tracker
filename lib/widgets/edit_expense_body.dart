@@ -21,44 +21,46 @@ class _EditExpenseBodyState extends State<EditExpenseBody> {
   final TextEditingController _categoryController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-      child: Column(
-        children: [
-          MyTextFormField(
-            controller: _titleController,
-            hintText: widget.expense.title ,
-          ),
-          const SizedBox(height: 16),
-
-          MyTextFormField(
-            controller: _amountController,
-            hintText: widget.expense.amount.toString(),
-            keyboardType: TextInputType.number,
-          ),
-          const SizedBox(height: 16),
-
-          MyTextFormField(
-            controller: _descriptionController,
-            hintText: widget.expense.description ?? 'Update description',
-            maxLines: 4,
-          ),
-          const SizedBox(height: 16),
-
-          MyTextFormField(
-            controller: _categoryController,
-            hintText: widget.expense.category ?? 'Update category',
-          ),
-          const SizedBox(height: 24),
-          ActionOutlinedButtom(
-            text: 'Save',
-            onPressed: () {
-              // Edit expense logic
-              editExpenseLogic(context);
-              showSnackBar(context, 'Expense edited successfully');
-            },
-          ),
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+        child: Column(
+          children: [
+            MyTextFormField(
+              controller: _titleController,
+              hintText: widget.expense.title ,
+            ),
+            const SizedBox(height: 16),
+      
+            MyTextFormField(
+              controller: _amountController,
+              hintText: widget.expense.amount.toString(),
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(height: 16),
+      
+            MyTextFormField(
+              controller: _descriptionController,
+              hintText: widget.expense.description ?? 'Update description',
+              maxLines: 4,
+            ),
+            const SizedBox(height: 16),
+      
+            MyTextFormField(
+              controller: _categoryController,
+              hintText: widget.expense.category ?? 'Update category',
+            ),
+            const SizedBox(height: 24),
+            ActionOutlinedButtom(
+              text: 'Save',
+              onPressed: () {
+                // Edit expense logic
+                editExpenseLogic(context);
+                showSnackBar(context, 'Expense edited successfully');
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -13,9 +13,15 @@ class StatisticsViewBody extends StatelessWidget {
     final keys = dataMap.keys.toList();
 
     final total = BlocProvider.of<ExpensesCubit>(context).getTotalExpenses();
-    final biggest = BlocProvider.of<ExpensesCubit>(context).getBiggestExpenseAmount();
-    final smallest = BlocProvider.of<ExpensesCubit>(context).getSmallestExpenseAmount();
-    final average = BlocProvider.of<ExpensesCubit>(context).getAverageExpenseAmount();
+    final biggest = BlocProvider.of<ExpensesCubit>(
+      context,
+    ).getBiggestExpenseAmount();
+    final smallest = BlocProvider.of<ExpensesCubit>(
+      context,
+    ).getSmallestExpenseAmount();
+    final average = BlocProvider.of<ExpensesCubit>(
+      context,
+    ).getAverageExpenseAmount();
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -26,31 +32,42 @@ class StatisticsViewBody extends StatelessWidget {
               height: 285,
               width: double.infinity,
               child: PieChart(
+                curve: Curves.bounceIn,
+                duration: Duration(microseconds: 500),
                 PieChartData(
                   sections: dataMap.entries.map((entry) {
                     final index = keys.indexOf(entry.key);
-                    final color = Colors.primaries[index % Colors.primaries.length];
-      
+                    final color =
+                        Colors.primaries[index % Colors.primaries.length];
+
+                    final totalValue = dataMap.values.fold<double>(
+                      0,
+                      (totalAmount, currentAmount) => totalAmount + currentAmount,
+                    );
+                    final percent = totalValue == 0
+                        ? 0
+                        : (entry.value / totalValue * 100);
+
                     return PieChartSectionData(
                       value: entry.value,
-                      title: entry.value.toStringAsFixed(1),
+                      title: '${percent.toStringAsFixed(0)}%',
                       color: color,
                       radius: 80,
                       titleStyle: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     );
                   }).toList(),
-                  sectionsSpace: 2,
+                  sectionsSpace: 4,
                   centerSpaceRadius: 60,
                 ),
               ),
             ),
-      
+
             const SizedBox(height: 8),
-      
+
             /// 🔹 Legend
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -58,7 +75,7 @@ class StatisticsViewBody extends StatelessWidget {
               children: dataMap.entries.map((entry) {
                 final index = keys.indexOf(entry.key);
                 final color = Colors.primaries[index % Colors.primaries.length];
-      
+
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4.0),
                   child: Row(
@@ -75,9 +92,9 @@ class StatisticsViewBody extends StatelessWidget {
                 );
               }).toList(),
             ),
-      
+
             const SizedBox(height: 16),
-      
+
             /// 🔹 Stats in GridView (Cards)
             GridView.count(
               shrinkWrap: true,
@@ -87,10 +104,26 @@ class StatisticsViewBody extends StatelessWidget {
               mainAxisSpacing: 12,
               childAspectRatio: 1.3,
               children: [
-                _buildStatCard(context, "Total", "${total.toStringAsFixed(2)}\$"),
-                _buildStatCard(context, "Biggest", "${biggest.toStringAsFixed(2)}\$"),
-                _buildStatCard(context, "Smallest", "${smallest.toStringAsFixed(2)}\$"),
-                _buildStatCard(context, "Average", "${average.toStringAsFixed(2)}\$"),
+                _buildStatCard(
+                  context,
+                  "Total",
+                  "${total.toStringAsFixed(2)}\$",
+                ),
+                _buildStatCard(
+                  context,
+                  "Biggest",
+                  "${biggest.toStringAsFixed(2)}\$",
+                ),
+                _buildStatCard(
+                  context,
+                  "Smallest",
+                  "${smallest.toStringAsFixed(2)}\$",
+                ),
+                _buildStatCard(
+                  context,
+                  "Average",
+                  "${average.toStringAsFixed(2)}\$",
+                ),
               ],
             ),
           ],
@@ -109,16 +142,20 @@ class StatisticsViewBody extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    )),
+            Text(
+              title,
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 8),
-            Text(value,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                    )),
+            Text(
+              value,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
       ),

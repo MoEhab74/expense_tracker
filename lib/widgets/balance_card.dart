@@ -69,8 +69,7 @@ class BalanceCard extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         // Clear expenses action
-                        context.read<ExpensesCubit>().clearAllExpenses();
-                        // context.read<ExpensesCubit>().fetchAllExpenses();
+                        clearExpensesDialog(context);
                       },
                       child: Text(
                         'Clear expenses',
@@ -100,9 +99,37 @@ class BalanceCard extends StatelessWidget {
           content: Text('Are you sure you want to delete your account?'),
           actions: [
             TextButton(
+              onPressed: () async {
+                // Handle account deletion
+                await FirebaseAuth.instance.currentUser!.delete();
+                Navigator.of(context).pop();
+              },
+              child: Text('Delete'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void clearExpensesDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Delete Expenses'),
+          content: Text('Are you sure you want to delete all expenses?'),
+          actions: [
+            TextButton(
               onPressed: () {
                 // Handle account deletion
-                FirebaseAuth.instance.currentUser!.delete();
+                context.read<ExpensesCubit>().clearAllExpenses();
                 Navigator.of(context).pop();
               },
               child: Text('Delete'),

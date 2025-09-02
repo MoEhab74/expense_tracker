@@ -33,9 +33,12 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   }
 
   // Clear all expenses method
-  void clearAllExpenses() {
+  void clearAllExpenses() async {
     expenses?.clear();
     // Return an empty list of expenses
+    var userExpenses = Hive.box<Expense>('user_expenses');
+    await userExpenses.clear(); 
+    expenses = [];
     emit(ExpensesLoadedSuccessfully(expenses!));
   }
 
@@ -64,6 +67,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     if (expenses == null) return 0;
     totalExpenses = expenses!.fold(
       0,
+      // total is the start ===> 0
       (total, expense) => total + expense.amount,
     );
     return totalExpenses;
@@ -82,10 +86,12 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     if (expenses == null) return {};
     Map<String, double> totalAmountByCategory = {};
     for (var expense in expenses!) {
+      // if the current category exists in the totalAmountByCategory map ===> update the value
       if (totalAmountByCategory.containsKey(expense.category)) {
         totalAmountByCategory[expense.category!] =
             totalAmountByCategory[expense.category!]! + expense.amount;
-      } else {
+      } // if the current category not exists in the totalAmountByCategory map ===> add it as a key with it's value
+      else {
         totalAmountByCategory[expense.category!] = expense.amount;
       }
     }
