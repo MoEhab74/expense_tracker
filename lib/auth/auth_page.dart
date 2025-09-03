@@ -1,5 +1,5 @@
+import 'package:expense_tracker/on_boarding/on_boarding2.dart';
 import 'package:expense_tracker/views/home_view.dart';
-import 'package:expense_tracker/views/on_boarding_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class AuthPage extends StatelessWidget {
           if (snapshot.hasData) {
             return HomeView();
           }
-          return OnBoardingView();
+          return OnBoarding2();
         },
       ),
     );

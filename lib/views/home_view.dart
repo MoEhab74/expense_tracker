@@ -77,7 +77,7 @@ class _HomeViewState extends State<HomeView> {
           CustomScrollView(
             slivers: [
               SliverToBoxAdapter(child: HomeViewStack()),
-              // const SliverToBoxAdapter(child: SizedBox(height: 20)),
+              // const SliverToBoxAdapter(child: SizedBox(height: 24)),
               SliverToBoxAdapter(
                 child: SafeArea(
                   child: Padding(
@@ -85,7 +85,7 @@ class _HomeViewState extends State<HomeView> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        HomeViewText(text: 'History of transactions'),
+                        HomeViewText(text: 'History of expenses'),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(

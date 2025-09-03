@@ -25,8 +25,8 @@ class HomeExpensesListViewBuilder extends StatelessWidget {
                 height: 300,
                 child: Center(
                   child: Text(
-                    'No expenses found',
-                    style: TextStyle(fontSize: 24),
+                    'No expenses yet',
+                    style: TextStyle(fontSize: 18),
                   ),
                 ),
               ),

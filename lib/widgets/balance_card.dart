@@ -76,15 +76,13 @@ class BalanceCard extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Clear expenses action
-                        // check first if there aren't any expenses
-                        if (BlocProvider.of<ExpensesCubit>(
+                        final expenses = BlocProvider.of<ExpensesCubit>(
                           context,
-                        ).expenses!.isEmpty) {
+                        ).expenses;
+
+                        if (expenses == null || expenses.isEmpty) {
                           clearExpensesHintDialog(context);
-                        } else if ((BlocProvider.of<ExpensesCubit>(
-                          context,
-                        ).expenses!.isNotEmpty)) {
+                        } else {
                           clearExpensesDialog(context);
                         }
                       },

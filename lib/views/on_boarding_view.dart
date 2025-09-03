@@ -1,4 +1,3 @@
-import 'package:expense_tracker/auth/auth_page.dart';
 import 'package:expense_tracker/on_boarding/on_boarding1.dart';
 import 'package:expense_tracker/on_boarding/on_boarding2.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +42,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                   onTap: () {
                     controller.jumpToPage(1);
                   },
-                  child: Text(
+                  child: controller.page == 1 ? Text('') : Text(
                     'Skip',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -63,7 +62,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                 onLastPage
                     ? GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, AuthPage.authRoute);
+                          Navigator.pushNamed(context, OnBoarding2.onBoarding2Route);
                         },
                         child: Text(
                           'Done',

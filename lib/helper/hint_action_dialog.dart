@@ -17,7 +17,7 @@ void logOutHintDialog(BuildContext context) {
                 await FirebaseAuth.instance.signOut();
                 Navigator.of(context).pop();
               },
-              child: Text('Delete'),
+              child: Text('Yes'),
             ),
             TextButton(
               onPressed: () {

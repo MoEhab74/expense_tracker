@@ -34,7 +34,7 @@ class _StatisticsViewState extends State<StatisticsView> {
             : Center(
                 child: Text(
                   'Add expenses to view statistics',
-                  style: TextStyle(fontSize: 24),
+                  style: TextStyle(fontSize: 18),
                 ),
               );
       },

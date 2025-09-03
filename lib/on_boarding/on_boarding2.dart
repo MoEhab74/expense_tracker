@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class OnBoarding2 extends StatelessWidget {
   const OnBoarding2({super.key});
+  static const String onBoarding2Route = 'onBoarding2';
 
   @override
   Widget build(BuildContext context) {

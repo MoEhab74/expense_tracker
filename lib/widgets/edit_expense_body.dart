@@ -18,17 +18,21 @@ class _EditExpenseBodyState extends State<EditExpenseBody> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _categoryController = TextEditingController();
+
+List<String> categories = [];
+  String? _selectedCategory;
 
   @override
-void initState() {
-  super.initState();
-  _titleController.text = widget.expense.title;
-  _amountController.text = widget.expense.amount.toString();
-  _descriptionController.text = widget.expense.description ?? '';
-  _categoryController.text = widget.expense.category ?? '';
-}
+  void initState() {
+    super.initState();
+    _titleController.text = widget.expense.title;
+    _amountController.text = widget.expense.amount.toString();
+    _descriptionController.text = widget.expense.description ?? '';
 
+    categories = BlocProvider.of<ExpensesCubit>(context).categories;
+
+    _selectedCategory = widget.expense.category;
+  }
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -56,9 +60,34 @@ void initState() {
             ),
             const SizedBox(height: 16),
       
-            MyTextFormField(
-              controller: _categoryController,
-              hintText: 'Update category',
+            DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.primary,
+                    width: 2,
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.primary,
+                    width: 2,
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                ),
+                labelText: 'Category',
+                border: const OutlineInputBorder(),
+              ),
+              initialValue: _selectedCategory,
+              items: categories.map((cat) {
+                return DropdownMenuItem(value: cat, child: Text(cat));
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  _selectedCategory = value;
+                });
+              },
             ),
             const SizedBox(height: 24),
             ActionOutlinedButtom(
@@ -88,10 +117,7 @@ void initState() {
         ? widget.expense.description
         : _descriptionController.text;
 
-    widget.expense.category = _categoryController.text.isEmpty
-        ? widget.expense.category
-        : _categoryController.text;
-
+    widget.expense.category = _selectedCategory ?? widget.expense.category;
     // Update the expense ===> save provided by hive
     widget.expense.save();
 
