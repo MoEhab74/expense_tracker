@@ -24,8 +24,6 @@ class _LoginFormState extends State<LoginForm> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  bool isAsyncCall = false;
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginUserCubit, LoginState>(

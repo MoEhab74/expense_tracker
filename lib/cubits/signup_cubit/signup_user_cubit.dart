@@ -15,6 +15,7 @@ class SignupUserCubit extends Cubit<SignupState> {
           // Open user box first
           // await openUserBox(userID: credential.user!.email!);
       emit(SignupSuccess(user: credential.user!));
+      showSnackBar(context, 'User signed up successfully.');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         showSnackBar(context,'The password provided is too weak.');

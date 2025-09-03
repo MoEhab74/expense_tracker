@@ -1,4 +1,3 @@
-import 'package:expense_tracker/auth/auth_page.dart';
 import 'package:expense_tracker/auth/login_page.dart';
 import 'package:expense_tracker/widgets/login_or_signup_hint.dart';
 import 'package:expense_tracker/widgets/simple_outlined_buttom.dart';
@@ -33,7 +32,7 @@ class OnBoarding2 extends StatelessWidget {
             SimpleOutlinedButtom(
               text: 'Let\'s Get Started',
               onPressed: () {
-                Navigator.pushNamed(context, AuthPage.authRoute);
+                Navigator.pushNamed(context, LoginPage.loginRoute);
               },
             ),
 

@@ -1,9 +1,7 @@
-import 'package:expense_tracker/auth/auth_page.dart';
 import 'package:expense_tracker/cubits/expenses_cubit/expenses_cubit.dart';
 import 'package:expense_tracker/cubits/expenses_cubit/expenses_states.dart';
 import 'package:expense_tracker/helper/hint_action_dialog.dart';
 import 'package:expense_tracker/widgets/home_card_info.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

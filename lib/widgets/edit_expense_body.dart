@@ -19,6 +19,16 @@ class _EditExpenseBodyState extends State<EditExpenseBody> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _categoryController = TextEditingController();
+
+  @override
+void initState() {
+  super.initState();
+  _titleController.text = widget.expense.title;
+  _amountController.text = widget.expense.amount.toString();
+  _descriptionController.text = widget.expense.description ?? '';
+  _categoryController.text = widget.expense.category ?? '';
+}
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -28,27 +38,27 @@ class _EditExpenseBodyState extends State<EditExpenseBody> {
           children: [
             MyTextFormField(
               controller: _titleController,
-              hintText: widget.expense.title ,
+              hintText: 'Update title',
             ),
             const SizedBox(height: 16),
       
             MyTextFormField(
               controller: _amountController,
-              hintText: widget.expense.amount.toString(),
+              hintText: 'Update amount',
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 16),
       
             MyTextFormField(
               controller: _descriptionController,
-              hintText: widget.expense.description ?? 'Update description',
+              hintText: 'Update description',
               maxLines: 4,
             ),
             const SizedBox(height: 16),
       
             MyTextFormField(
               controller: _categoryController,
-              hintText: widget.expense.category ?? 'Update category',
+              hintText: 'Update category',
             ),
             const SizedBox(height: 24),
             ActionOutlinedButtom(

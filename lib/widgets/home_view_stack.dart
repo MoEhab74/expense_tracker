@@ -1,5 +1,4 @@
 import 'package:expense_tracker/cubits/expenses_cubit/expenses_cubit.dart';
-import 'package:expense_tracker/views/profile_view.dart';
 import 'package:expense_tracker/widgets/balance_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

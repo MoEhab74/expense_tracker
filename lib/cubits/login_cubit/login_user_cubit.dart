@@ -31,7 +31,7 @@ class LoginUserCubit extends Cubit<LoginState> {
       emit(LoginSuccess(user: credential.user!));
       showSnackBar(
         context,
-        'User logged in successfully, signed in as: ${credential.user!.email}',
+        'User logged in successfully.',
       );
       // Navigate to HomeView
     } on FirebaseAuthException catch (e) {

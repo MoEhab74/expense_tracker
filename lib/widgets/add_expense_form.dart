@@ -127,9 +127,7 @@ class _AddExpenseFormState extends State<AddExpenseForm> {
                 return null;
               },
             ),
-            const SizedBox(height: 16),
-
-            const SizedBox(height: 16),
+            const SizedBox(height: 32),
             MyElevatedButtom(
               text: 'Add Expense',
               backgroundColor: Theme.of(context).colorScheme.primary,
